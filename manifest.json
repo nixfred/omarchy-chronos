@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "nixfred.chronos",
+  "name": "Chronos",
+  "version": "1.0.0",
+  "author": "nixfred",
+  "license": "MIT",
+  "description": "Clock and calendar with a pulse — a day-progress ring, shimmering year and life rails, a drawn moon phase, and a month grid that arrives on a stagger. A fork of Omarchy's stock clock.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Chronos",
+    "description": "Date/time label with an animated calendar popup",
+    "category": "Time",
+    "aliases": ["clock", "calendar", "chronos"],
+    "allowMultiple": false,
+    "defaultSection": "center"
+  }
+}
