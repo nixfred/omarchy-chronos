@@ -154,9 +154,20 @@ Panel {
 
   // Summoning by hotkey moves no pointer, so a hover the bar was still
   // holding must not keep the center indicators revealed behind the panel.
+  // A third-party plugin is handed PluginBarApi, not the host Bar, and there
+  // centerHoverRevealSuppressed is a READ-ONLY mirror: assigning it throws a
+  // TypeError. close() calls this on its first line, so the throw aborted
+  // close() before controller.hide() ran and the panel kept the keyboard.
+  // Prefer the delegated setter, and never let this wedge close().
   function setCenterHoverRevealSuppressed(value) {
-    if (root.bar && "centerHoverRevealSuppressed" in root.bar)
-      root.bar.centerHoverRevealSuppressed = value
+    try {
+      if (root.bar && typeof root.bar.setCenterHoverRevealSuppressed === "function")
+        root.bar.setCenterHoverRevealSuppressed(value)
+      else if (root.bar && "centerHoverRevealSuppressed" in root.bar)
+        root.bar.centerHoverRevealSuppressed = value
+    } catch (e) {
+      console.warn("chronos: could not set centerHoverRevealSuppressed:", e)
+    }
   }
 
   function refresh() {
